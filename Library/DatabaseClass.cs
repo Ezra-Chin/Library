@@ -24,7 +24,7 @@ namespace Library
                 DataStruct temp = new DataStruct();
 
                 gen.GetNextAccount(
-                    out temp.pin, out temp.accountNumber, out temp.firstName, out temp.lastName, out temp.balance);
+                    out temp.pin, out temp.accountNumber, out temp.firstName, out temp.lastName, out temp.balance, out temp.photo);
 
                 dataStruct.Add(temp);
             }
@@ -58,6 +58,11 @@ namespace Library
         public int GetNumberRecord()
         {
             return dataStruct.Count;
+        }
+
+        public byte[] GetPhotoByIndex(int index)
+        {
+            return dataStruct[index].photo;
         }
 
 

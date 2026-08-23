@@ -13,6 +13,7 @@ namespace Library
         public int balance;
         public string firstName;
         public string lastName;
+        public byte[] photo; 
 
         public DataStruct()
         {
@@ -21,6 +22,7 @@ namespace Library
             balance = 0;
             firstName = "";
             lastName = "";
+            photo = null; 
         }
     }
 }

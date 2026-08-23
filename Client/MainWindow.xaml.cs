@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ServiceModel;
-using DataServer;
+using DataContracts;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 
 namespace Client
@@ -30,6 +32,8 @@ namespace Client
             InitializeComponent();
 
             NetTcpBinding tcp = new NetTcpBinding();
+            tcp.MaxReceivedMessageSize = 10 * 1024 * 1024;
+            tcp.MaxBufferSize = 1 *1024 * 1024;
 
             string URL = "net.tcp://localhost:8100/DataService";
 
@@ -37,26 +41,83 @@ namespace Client
 
             foob = factory.CreateChannel();
 
-            TotalNum.Text = foob.GetNumEntries().ToString();
-        }
+            try
+            {
+                TotalNum.Text = foob.GetNumEntries().ToString();
 
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show("DataServer is not running. Please start the DataServer first.");
+                Application.Current.Shutdown();
+            }
+            catch (CommunicationException)
+            {
+                MessageBox.Show("DataServer is not running. Please start the DataServer first.");
+            }
+
+
+        }
+        private void LoadPhoto(int index)
+        {
+            byte[] data = foob.GetPhoto(index);
+            if (data == null || data.Length == 0)
+            {
+                PhotoBox.Source = null;
+                return;
+            }
+            BitmapImage img = new BitmapImage();
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                img.BeginInit();
+                img.CacheOption = BitmapCacheOption.OnLoad;
+                img.StreamSource = ms;
+                img.EndInit();
+            }
+            img.Freeze();
+            PhotoBox.Source = img;
+
+        }
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
             int index = 0;
-            string fName = "", lName = "";
-            int bal = 0;
-            uint acct = 0, pin = 0;
-            //On click, Get the index....
-            index = Int32.Parse(IndexNum.Text);
-            //Then, run our RPC function, using the out mode parameters...
-            foob.GetValuesForEntry(index, out acct, out pin, out bal, out fName, out lName);
-            //And now, set the values in the GUI!
-            FNameBox.Text = fName;
-            LNameBox.Text = lName;
-            BalanceBox.Text = bal.ToString("C");
-            AcctNoBox.Text = acct.ToString();
-            PinBox.Text = pin.ToString("D4");
-        }
 
+
+            if (!Int32.TryParse(IndexNum.Text, out index))
+            {
+                MessageBox.Show("Please enter a valid integer for the index.");
+                return;
+            }
+
+            try
+            {
+                string fName = "", lName = "";
+                int bal = 0;
+                uint acct = 0, pin = 0;
+                index = Int32.Parse(IndexNum.Text);
+                foob.GetValuesForEntry(index, out acct, out pin, out bal, out fName, out lName);
+                LoadPhoto(index);
+                FNameBox.Text = fName;
+                LNameBox.Text = lName;
+                BalanceBox.Text = bal.ToString("C");
+                AcctNoBox.Text = acct.ToString();
+                PinBox.Text = pin.ToString("D4");
+
+            }
+            catch (FaultException<IndexFault> ex)
+            {
+                MessageBox.Show("Recordd not found ");
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("The request timed out. Please try again.");
+            }
+            catch (CommunicationException ex)
+            {
+                MessageBox.Show("There was a communication error. Please try again.", ex.ToString());
+            }
+
+
+        }
     }
 }

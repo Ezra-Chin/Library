@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using DataContracts;
 
 namespace DataServer
 {
@@ -15,6 +16,8 @@ namespace DataServer
 
             ServiceHost host;
             NetTcpBinding tcp = new NetTcpBinding();
+            tcp.MaxReceivedMessageSize = 10 * 1024 * 1024; 
+            tcp.MaxBufferSize = 10 * 1024 * 1024;
 
             host = new ServiceHost(typeof(DataServer));
 

@@ -117,6 +117,14 @@
                 HorizontalAlignment="Center"
                 Margin="10"
                 Click="GoButton_Click"/>
+        <Image x:Name="PhotoBox"
+               Grid.Row="7"
+               Grid.Column="1"
+               Width = "120"
+               Height = "150"
+               Stretch = "Uniform"
+               Margin="149,24,0,24"
+               HorizontalAlignment="Left"/>
 
     </Grid>
 
