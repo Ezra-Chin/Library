@@ -33,7 +33,7 @@ namespace Client
 
             NetTcpBinding tcp = new NetTcpBinding();
             tcp.MaxReceivedMessageSize = 10 * 1024 * 1024;
-            tcp.MaxBufferSize = 1 *1024 * 1024;
+            tcp.MaxBufferSize = 10 *1024 * 1024;
 
             string URL = "net.tcp://localhost:8100/DataService";
 
@@ -60,23 +60,41 @@ namespace Client
         }
         private void LoadPhoto(int index)
         {
-            byte[] data = foob.GetPhoto(index);
-            if (data == null || data.Length == 0)
+            try
             {
-                PhotoBox.Source = null;
-                return;
-            }
-            BitmapImage img = new BitmapImage();
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                img.BeginInit();
-                img.CacheOption = BitmapCacheOption.OnLoad;
-                img.StreamSource = ms;
-                img.EndInit();
-            }
-            img.Freeze();
-            PhotoBox.Source = img;
 
+                byte[] data = foob.GetPhoto(index);
+
+                if (data == null || data.Length == 0)
+                {
+                    PhotoBox.Source = null;
+                    MessageBox.Show("No photo data was returned.");
+                    return;
+                }
+
+                MessageBox.Show($"Received {data.Length} bytes.");
+
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    BitmapImage img = new BitmapImage();
+
+                    img.BeginInit();
+                    img.CacheOption = BitmapCacheOption.OnLoad;
+                    img.StreamSource = ms;
+                    img.EndInit();
+                    img.Freeze();
+
+                    PhotoBox.Source = img;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.ToString(),
+                    "LoadPhoto Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -114,7 +132,11 @@ namespace Client
             }
             catch (CommunicationException ex)
             {
-                MessageBox.Show("There was a communication error. Please try again.", ex.ToString());
+                MessageBox.Show(
+                    ex.ToString(),
+                    "Communication Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
 
 

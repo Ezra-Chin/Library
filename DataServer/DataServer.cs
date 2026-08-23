@@ -51,9 +51,12 @@ namespace DataServer
             lastName = db.GetLastNameByIndex(index);
         }
         
-        public byte[] getPhoto(int index)
+        public byte[] GetPhoto(int index)
         {
+            Console.WriteLine("GetPhoto called");
+
             int count = db.GetNumberRecord();
+
             if (index < 0 || index >= count)
             {
                 IndexFault fault = new IndexFault
@@ -64,6 +67,7 @@ namespace DataServer
                 };
                 throw new FaultException<IndexFault>(fault, new FaultReason(fault.Reason));
             }
+
             return db.GetPhotoByIndex(index);
         }
     }

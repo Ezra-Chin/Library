@@ -12,6 +12,7 @@ namespace DataServer
     public interface DataServerInterface
     {
         [OperationContract]
+        [FaultContract(typeof(IndexFault))]
         int GetNumEntries();
 
         [OperationContract]
