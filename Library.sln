@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37502.11 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{FA03F5BB-3DCE-4E7D-96D6-32E989B301A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataServer", "DataServer\DataServer.csproj", "{7099C08A-13CC-418F-965A-138ED50852DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{84866A8E-3C58-4404-AD3D-9D6BA79AC555}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA03F5BB-3DCE-4E7D-96D6-32E989B301A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA03F5BB-3DCE-4E7D-96D6-32E989B301A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA03F5BB-3DCE-4E7D-96D6-32E989B301A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA03F5BB-3DCE-4E7D-96D6-32E989B301A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7099C08A-13CC-418F-965A-138ED50852DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7099C08A-13CC-418F-965A-138ED50852DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7099C08A-13CC-418F-965A-138ED50852DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7099C08A-13CC-418F-965A-138ED50852DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84866A8E-3C58-4404-AD3D-9D6BA79AC555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84866A8E-3C58-4404-AD3D-9D6BA79AC555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84866A8E-3C58-4404-AD3D-9D6BA79AC555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84866A8E-3C58-4404-AD3D-9D6BA79AC555}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1165530-D826-482A-88C6-4DE2ECF6F9B8}
+	EndGlobalSection
+EndGlobal
