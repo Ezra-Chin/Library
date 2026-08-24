@@ -44,6 +44,7 @@ namespace DataServer
                 };
                 throw new FaultException<IndexFault>(fault, new FaultReason(fault.Reason));
             }
+        
             accountNumber = db.GetAccountNumberByIndex(index);
             pin = db.GetPinByIndex(index);
             balanace = db.GetBalanceByIndex(index);

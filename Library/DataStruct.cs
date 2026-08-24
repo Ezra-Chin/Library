@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    internal class DataStruct
+    public class DataStruct
     {
+        public int index;
         public uint accountNumber;
         public uint pin;
         public int balance;

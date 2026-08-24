@@ -21,7 +21,7 @@ namespace Library
 
             DatabaseGenerator gen = new DatabaseGenerator();
 
-            for (int i = 0; i < 100; i ++)
+            for (int i = 0; i < 100000; i ++)
             {
                 DataStruct temp = new DataStruct();
 

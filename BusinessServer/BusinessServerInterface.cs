@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using DataContracts;
+using Library;
 
 
 namespace BusinessServer
@@ -26,6 +27,9 @@ namespace BusinessServer
         [OperationContract]
         [FaultContract(typeof(IndexFault))]
         byte[] GetPhoto(int index);
+
+        [OperationContract]
+        DataStruct SearchByLastName(string lastName);
 
     }
 }

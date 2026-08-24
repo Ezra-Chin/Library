@@ -17,6 +17,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using BusinessServer;
 using DataContracts;
+using Library;
 
 
 namespace Client
@@ -28,6 +29,8 @@ namespace Client
     {
         ChannelFactory<BusinessServerInterface> factory;
         BusinessServerInterface foob;
+
+        delegate DataStruct SearchDelegate(string lastName0);
         public MainWindow()
         {
             InitializeComponent();
@@ -94,6 +97,37 @@ namespace Client
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
+        }
+
+       private void OnSearchComplete(IAsyncResult ar)
+        {
+            SearchDelegate searchDel = (SearchDelegate)ar.AsyncState;
+            DataStruct result = searchDel.EndInvoke(ar);
+            if (result != null)
+            {
+                FNameBox.Text = result.firstName;
+                LNameBox.Text = result.lastName;
+                BalanceBox.Text = result.balance.ToString("C");
+                AcctNoBox.Text = result.accountNumber.ToString();
+                PinBox.Text = result.pin.ToString("D4");
+                LoadPhoto(result.index);
+            }
+            else
+            {
+                MessageBox.Show("No record found for last name: " + SearchBox.Text);
+            }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string lastName =SearchBox.Text;
+
+            SearchDelegate searchDel = foob.SearchByLastName;
+
+            searchDel.BeginInvoke(
+                lastName,
+                OnSearchComplete,
+                searchDel);
         }
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
