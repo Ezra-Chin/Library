@@ -96,6 +96,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessServer\BusinessServer.csproj">
+      <Project>{791eb93b-7720-46d4-9ebc-608128fae5b9}</Project>
+      <Name>BusinessServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataContracts\DataContracts.csproj">
       <Project>{3e439940-ce73-42f7-88c7-7a10057779d6}</Project>
       <Name>DataContracts</Name>

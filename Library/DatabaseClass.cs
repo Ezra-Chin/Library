@@ -10,9 +10,11 @@ namespace Library
 
     public class DatabaseClass
     {
-        List<DataStruct> dataStruct;
+        private readonly List<DataStruct> dataStruct;
 
-        public DatabaseClass()
+        public static DatabaseClass Instance { get; } = new DatabaseClass();
+
+        private DatabaseClass()
         {
 
             dataStruct = new List<DataStruct>();

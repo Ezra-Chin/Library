@@ -11,9 +11,12 @@ namespace DataContracts
     public interface DataServerInterface
     {
         [OperationContract]
+        [FaultContract(typeof(IndexFault))]
         int GetNumEntries();
 
         [OperationContract]
+        [FaultContract(typeof(IndexFault))]
+
         void GetValuesForEntry(
             int index, out uint accountNumber, out uint pin, out int balance, out string firstName, out string lastName);
 

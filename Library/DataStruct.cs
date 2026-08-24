@@ -22,7 +22,7 @@ namespace Library
             balance = 0;
             firstName = "";
             lastName = "";
-            photo = null; 
+            photo = null;   
         }
     }
 }

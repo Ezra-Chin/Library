@@ -13,9 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ServiceModel;
-using DataContracts;
 using System.IO;
 using System.Windows.Media.Imaging;
+using BusinessServer;
+using DataContracts;
 
 
 namespace Client
@@ -25,8 +26,8 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        ChannelFactory<DataServerInterface> factory;
-        DataServerInterface foob;
+        ChannelFactory<BusinessServerInterface> factory;
+        BusinessServerInterface foob;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,9 +36,9 @@ namespace Client
             tcp.MaxReceivedMessageSize = 10 * 1024 * 1024;
             tcp.MaxBufferSize = 10 *1024 * 1024;
 
-            string URL = "net.tcp://localhost:8100/DataService";
+            string URL = "net.tcp://localhost:8200/BusinessServer";
 
-            factory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            factory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
 
             foob = factory.CreateChannel();
 
@@ -68,11 +69,9 @@ namespace Client
                 if (data == null || data.Length == 0)
                 {
                     PhotoBox.Source = null;
-                    MessageBox.Show("No photo data was returned.");
                     return;
                 }
 
-                MessageBox.Show($"Received {data.Length} bytes.");
 
                 using (MemoryStream ms = new MemoryStream(data))
                 {
@@ -81,7 +80,7 @@ namespace Client
                     img.BeginInit();
                     img.CacheOption = BitmapCacheOption.OnLoad;
                     img.StreamSource = ms;
-                    img.EndInit();
+                    img.EndInit(); 
                     img.Freeze();
 
                     PhotoBox.Source = img;

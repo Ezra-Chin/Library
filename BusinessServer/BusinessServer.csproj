@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7099C08A-13CC-418F-965A-138ED50852DF}</ProjectGuid>
+    <ProjectGuid>{791EB93B-7720-46D4-9EBC-608128FAE5B9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DataServer</RootNamespace>
-    <AssemblyName>DataServer</AssemblyName>
+    <RootNamespace>BusinessServer</RootNamespace>
+    <AssemblyName>BusinessServer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataServer.cs" />
+    <Compile Include="BusinessServer.cs" />
+    <Compile Include="BusinessServerInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,13 +57,6 @@
       <Project>{3e439940-ce73-42f7-88c7-7a10057779d6}</Project>
       <Name>DataContracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library\Library.csproj">
-      <Project>{fa03f5bb-3dce-4e7d-96d6-32e989b301a7}</Project>
-      <Name>Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

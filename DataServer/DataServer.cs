@@ -16,11 +16,11 @@ namespace DataServer
     [ServiceBehavior ( ConcurrencyMode = ConcurrencyMode.Multiple , UseSynchronizationContext =false )]
     internal class DataServer: DataServerInterface
     {
-        DatabaseClass db; 
+        private readonly DatabaseClass db; 
 
         public DataServer()
         {
-            db = new DatabaseClass();
+            db = DatabaseClass.Instance;
         }
         public int GetNumEntries()
         {
@@ -53,7 +53,6 @@ namespace DataServer
         
         public byte[] GetPhoto(int index)
         {
-            Console.WriteLine("GetPhoto called");
 
             int count = db.GetNumberRecord();
 
