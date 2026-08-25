@@ -24,6 +24,7 @@ namespace DataServer
         }
         public int GetNumEntries()
         {
+            Console.Write("Server");
             return db.GetNumberRecord();
         }
 

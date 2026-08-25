@@ -13,8 +13,9 @@ namespace DataServer
         static void Main(string[] args)
         {
             Console.WriteLine("Bank Server Startig...");
-
+            Console.Write("Building Records...");
             ServiceHost host;
+           
             NetTcpBinding tcp = new NetTcpBinding();
             tcp.MaxReceivedMessageSize = 10 * 1024 * 1024; 
             tcp.MaxBufferSize = 10 * 1024 * 1024;
@@ -22,10 +23,12 @@ namespace DataServer
             host = new ServiceHost(typeof(DataServer));
 
             host.AddServiceEndpoint(
-                typeof(DataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
-
+                typeof(DataServerInterface),
+                tcp,
+                "net.tcp://127.0.0.1:8100/DataService");
 
             host.Open();
+            Console.WriteLine("Service Online");
             Console.WriteLine("Service Online");
 
             Console.ReadLine();

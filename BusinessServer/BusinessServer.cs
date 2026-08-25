@@ -11,20 +11,28 @@ namespace BusinessServer
 {
     internal class BusinessServer : BusinessServerInterface
     {
+        
+
+        private ChannelFactory<DataServerInterface> _factory;
+        private DataServerInterface _dataServer;
+
         public BusinessServer()
         {
             _factory = new ChannelFactory<DataServerInterface>(
                 new NetTcpBinding(),
-                new EndpointAddress("net.tcp://localhost:8100/DataService")
+                new EndpointAddress("net.tcp://127.0.0.1:8100/DataService")
             );
 
             _dataServer = _factory.CreateChannel();
+            Console.Write("Initialized BusinessServer");
+            Console.WriteLine("Calling DataServer...");
+            Console.WriteLine("Number of entries: " + _dataServer.GetNumEntries());
         }
-        private ChannelFactory<DataServerInterface> _factory;
-        private DataServerInterface _dataServer;
+
 
         public int GetNumEntries()
         {
+            Console.Write("BusinessServer");
             return _dataServer.GetNumEntries();
         }
 

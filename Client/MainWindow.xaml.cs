@@ -30,7 +30,7 @@ namespace Client
         ChannelFactory<BusinessServerInterface> factory;
         BusinessServerInterface foob;
 
-        delegate DataStruct SearchDelegate(string lastName0);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace Client
             tcp.MaxReceivedMessageSize = 10 * 1024 * 1024;
             tcp.MaxBufferSize = 10 *1024 * 1024;
 
-            string URL = "net.tcp://localhost:8200/BusinessServer";
+            string URL = "net.tcp://127.0.0.1:8200/BusinessServer";
 
             factory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
 
@@ -99,10 +99,19 @@ namespace Client
             }
         }
 
-       private void OnSearchComplete(IAsyncResult ar)
+
+
+        private async void SearchButton_Click(object sender, RoutedEventArgs e )
         {
-            SearchDelegate searchDel = (SearchDelegate)ar.AsyncState;
-            DataStruct result = searchDel.EndInvoke(ar);
+            string lastName = SearchBox.Text;
+
+            // Waiting state
+            SearchBox.IsReadOnly = true;
+            SearchButton.IsEnabled = false;
+            SearchProgress.IsIndeterminate = true;
+
+            DataStruct result = await Task.Run(() =>
+                foob.SearchByLastName(lastName));
             if (result != null)
             {
                 FNameBox.Text = result.firstName;
@@ -110,24 +119,19 @@ namespace Client
                 BalanceBox.Text = result.balance.ToString("C");
                 AcctNoBox.Text = result.accountNumber.ToString();
                 PinBox.Text = result.pin.ToString("D4");
+
                 LoadPhoto(result.index);
             }
             else
             {
-                MessageBox.Show("No record found for last name: " + SearchBox.Text);
+                MessageBox.Show(
+                    "No record found for last name: " + lastName);
             }
-        }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            string lastName =SearchBox.Text;
-
-            SearchDelegate searchDel = foob.SearchByLastName;
-
-            searchDel.BeginInvoke(
-                lastName,
-                OnSearchComplete,
-                searchDel);
+            // Return GUI to normal
+            SearchBox.IsReadOnly = false;
+            SearchButton.IsEnabled = true;
+            SearchProgress.IsIndeterminate = false;
         }
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
